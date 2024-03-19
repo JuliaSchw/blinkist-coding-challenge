@@ -1,6 +1,6 @@
 import React from "react";
 import { trackPageview, trackEvent } from "./api/analytics";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 type HomePageProps = {};
 
