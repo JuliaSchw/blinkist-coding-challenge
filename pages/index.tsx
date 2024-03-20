@@ -1,6 +1,7 @@
 import React from "react";
 import { trackPageview, trackEvent } from "./api/analytics";
 import Image from "next/legacy/image";
+import Link from "next/link";
 
 type HomePageProps = {};
 
@@ -27,7 +28,7 @@ const HomePage: React.FC<HomePageProps> = (props) => {
       </div>
 
       <div>
-        Thanks a lot for reading the article! <a href="/signup">SIGN UP</a> for
+        Thanks a lot for reading the article! <Link href="/">SIGN UP</Link> for
         Blinkist.
       </div>
     </>
