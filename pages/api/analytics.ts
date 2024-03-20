@@ -1,5 +1,6 @@
 interface PageviewParams {
   url: string;
+  version: string;
 }
 
 interface EventParams {
@@ -13,7 +14,7 @@ interface EventParams {
  * The URL is probably a good start though.
  */
 export const trackPageview = (params: PageviewParams) => {
-  console.log(`--> Tracking Pageview: ${JSON.stringify(params)}`);
+  console.log("--> Tracking Pageview:", params);
 };
 
 /**
@@ -22,5 +23,5 @@ export const trackPageview = (params: PageviewParams) => {
  * The URL and an event name are probably a good start though.
  */
 export const trackEvent = (params: EventParams) => {
-  console.log(`--> Tracking Event: ${JSON.stringify(params)}`);
+  console.log("--> Tracking Event:", params);
 };
