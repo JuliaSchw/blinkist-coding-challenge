@@ -1,49 +1,63 @@
-import React from "react";
-import { trackPageview, trackEvent } from "./api/analytics";
-import Image from "next/legacy/image";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { trackPageview, trackEvent } from "./api/analytics";
+import { v4 as uuidv4 } from "uuid";
 
-type HomePageProps = {};
+const getVariation = () => {
+  const savedVariation = localStorage.getItem("variation");
+  if (savedVariation) return savedVariation;
 
-const HomePage: React.FC<HomePageProps> = (props) => {
-  const [version, setVersion] = useState<string | null>(null);
+  const variation = Math.random() < 0.5 ? "control" : "test";
+  localStorage.setItem("variation", variation);
+  return variation;
+};
+
+const HomePage: React.FC<{}> = () => {
+  const [variation, setVariation] = useState("control");
 
   useEffect(() => {
-    const savedVersion = localStorage.getItem("version");
+    const userId = getUserId();
+    const variation = getVariation();
+    trackPageview(`URL - Variation: ${variation} - UserID: ${userId}`);
+  }, []);
 
-    if (savedVersion) {
-      setVersion(savedVersion);
-    } else {
-      const newVersion = Math.random() < 0.5 ? "control" : "test";
-      localStorage.setItem("version", newVersion);
-      setVersion(newVersion);
+  const handleSignUpClick = () => {
+    const userId = getUserId();
+    trackEvent(
+      `URL - SignUp Click - Variation: ${variation} - UserID: ${userId}`
+    );
+  };
+
+  function getUserId() {
+    let userId = localStorage.getItem("userId");
+    if (!userId) {
+      userId = uuidv4();
+      localStorage.setItem("userId", userId);
     }
-    if (version) {
-      trackPageview({ url: window.location.pathname, version: version });
-    }
-  }, [version]);
+    return userId;
+  }
 
   return (
     <>
       <h1>Check out the Blinkist app</h1>
-
       <Image
-        width={525}
-        height={275.5}
+        width={300}
+        height={300}
         src="/hero_image.jpg"
         alt="Check out the Blinkist app"
       />
-
-      {version === "control" ? (
+      {variation === "control" ? (
         <div>Meet the app that revolutionized reading.</div>
       ) : (
         <div>Meet the app that has 18 million users.</div>
       )}
-
       <div>
-        Thanks a lot for reading the article! <Link href="/">SIGN UP</Link> for
-        Blinkist.
+        Thanks a lot for reading the article!
+        <Link href="/" onClick={handleSignUpClick}>
+          SIGN UP
+        </Link>
+        for Blinkist.
       </div>
     </>
   );
