@@ -1,0 +1,31 @@
+// schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  clicks    Click[]
+}
+
+model Variation {
+  id          String   @id @default(uuid())
+  description String
+  clicks      Click[]
+}
+
+model Click {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  variationId String
+  variation   Variation @relation(fields: [variationId], references: [id])
+}
