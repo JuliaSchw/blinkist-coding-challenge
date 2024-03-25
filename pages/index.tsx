@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { trackPageview, trackEvent } from "./api/analytics";
 import { v4 as uuidv4 } from "uuid";
 
@@ -18,8 +17,9 @@ const HomePage: React.FC<{}> = () => {
 
   useEffect(() => {
     const userId = getUserId();
-    const variation = getVariation();
-    trackPageview(`URL - Variation: ${variation} - UserID: ${userId}`);
+    const assignedVariation = getVariation();
+    setVariation(assignedVariation);
+    trackPageview(`URL - Variation: ${assignedVariation} - UserID: ${userId}`);
   }, []);
 
   const handleSignUpClick = () => {
@@ -54,9 +54,9 @@ const HomePage: React.FC<{}> = () => {
       )}
       <div>
         Thanks a lot for reading the article!
-        <Link href="/" onClick={handleSignUpClick}>
+        <a href="#" onClick={handleSignUpClick}>
           SIGN UP
-        </Link>
+        </a>
         for Blinkist.
       </div>
     </>
