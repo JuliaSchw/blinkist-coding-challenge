@@ -19,14 +19,12 @@ const HomePage: React.FC<{}> = () => {
     const userId = getUserId();
     const assignedVariation = getVariation();
     setVariation(assignedVariation);
-    trackPageview(`URL - Variation: ${assignedVariation} - UserID: ${userId}`);
+    trackPageview(userId, assignedVariation);
   }, []);
 
   const handleSignUpClick = () => {
     const userId = getUserId();
-    trackEvent(
-      `URL - SignUp Click - Variation: ${variation} - UserID: ${userId}`
-    );
+    trackEvent(userId, variation);
   };
 
   function getUserId() {

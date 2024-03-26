@@ -1,17 +1,43 @@
-/**
- * Tracks a pageview to our "imaginary api" - in this demo just the browser console. ;)
- * Send as params whatever you might seem valuable to send.
- * The URL is probably a good start though.
- */
-export const trackPageview = (params) => {
-  console.log(`--> Tracking Pageview: ${params}`);
+export const trackPageview = async (userId: string, variation: string) => {
+  try {
+    const response = await fetch("/api/pageview", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+        variation,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    console.log("Pageview tracked successfully.");
+  } catch (error) {
+    console.error("Error tracking pageview:", error);
+  }
 };
 
-/**
- * Tracks an event to our "imaginary api" - in this demo just the browser console. ;)
- * Send as params whatever you might seem valuable to send.
- * The URL and an event name are probably a good start though.
- */
-export const trackEvent = (params) => {
-  console.log(`--> Tracking Event: ${params}`);
+export const trackEvent = async (userId: string, variation: string) => {
+  try {
+    const response = await fetch("/api/click", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+        variation,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    console.log("Event tracked successfully.");
+  } catch (error) {
+    console.error("Error tracking event:", error);
+  }
 };
