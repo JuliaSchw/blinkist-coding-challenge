@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { trackPageview, trackEvent } from "./api/analytics";
 import { v4 as uuidv4 } from "uuid";
+import CtrDisplay from "./../components/ctr/index";
 
 const getVariation = () => {
   const savedVariation = localStorage.getItem("variation");
@@ -57,6 +58,7 @@ const HomePage: React.FC<{}> = () => {
         </a>
         for Blinkist.
       </div>
+      <CtrDisplay></CtrDisplay>
     </>
   );
 };
