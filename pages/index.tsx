@@ -41,7 +41,7 @@ const HomePage: React.FC<{}> = () => {
       <h1>Check out the Blinkist app</h1>
       <Image
         width={300}
-        height={300}
+        height={200}
         src="/hero_image.jpg"
         alt="Check out the Blinkist app"
       />
